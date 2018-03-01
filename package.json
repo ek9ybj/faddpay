@@ -1,0 +1,30 @@
+{
+  "name": "faddpay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ek9ybj/faddpay.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ek9ybj/faddpay/issues"
+  },
+  "homepage": "https://github.com/ek9ybj/faddpay#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "connect-flash": "^0.1.1",
+    "express": "^4.16.2",
+    "express-dot-engine": "^1.0.7",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.0.2",
+    "mongoose": "^5.0.7",
+    "nodemon": "^1.17.1"
+  }
+}

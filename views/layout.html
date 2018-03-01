@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css" />
+    <title>FADD Pay</title>
+</head>
+<body>
+    <nav class="uk-navbar-container" style="height:52px;" uk-navbar>
+        <div class="uk-navbar-left">
+            <a class="uk-navbar-item uk-logo" href="/">FADD Pay</a>
+        </div>
+        <div class="uk-navbar-right uk-margin-right uk-visible@m">
+            <ul class="uk-navbar-nav">
+                <li>Item</li>
+            </ul>
+        </div>
+        <div class="uk-navbar-right uk-margin-right uk-hidden@m">
+            <a class="uk-icon-link" uk-icon="icon: menu; ratio: 1.7"></a>
+            <div class="uk-padding-small" uk-dropdown="mode: click; pos: bottom-right">
+                <ul class="uk-nav uk-dropdown-nav uk-nav-parent-icon" uk-nav>
+                    <li>Item</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <hr class="uk-margin-remove">
+    <div class="uk-container uk-margin-small-top" uk-height-viewport="expand: true">
+        [[= layout.body ]]
+    </div>
+    <hr class="uk-margin-remove">
+    <footer>
+        <div uk-grid>
+            <div class="uk-flex uk-flex-center uk-width-1-1@s uk-margin-small uk-margin-small-top uk-padding-remove">
+                <p>© 2018 FADD Pay</p>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/js/uikit-icons.min.js"></script>
+</body>
+</html>
