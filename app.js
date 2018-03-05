@@ -8,7 +8,18 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 
+// Get Configs
+const config = require('./config.js');
 
+// Connect to DB
+mongoose.connect(config.database.mongodb);
+let db = mongoose.connection;
+db.once('open', function() {
+    console.log('Database connection established');
+});
+db.on('error', function(err) {
+    console.log(err);
+});
 
 // Load View Engine
 var engine = require('express-dot-engine');
