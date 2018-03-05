@@ -68,6 +68,14 @@ app.get('/', function(req, res) {
     res.render('home');
 });
 
+// Routes
+app.use('/user', require('./routes/user'));
+
+// Catch-all Route
+app.all('*', function(req, res) {
+    res.render('404');
+});
+
 // Start Server
 app.listen(3000, function() {
     console.log('[Express] Listening on localhost:3000');
