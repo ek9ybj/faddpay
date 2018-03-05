@@ -35,7 +35,7 @@ router.post('/login', function(req, res) {
     User.findOne({ email: email }, function(err, user) {
         if(user) {
             //bcrypt.compare(password, user.password, function(err, match) {
-            let match = user.password = password; //remove after a working registration that creates the bcrypt hashes
+            let match = user.password == password; //remove after a working registration that creates the bcrypt hashes
                 if(match) {
                     req.session.user = user;
                     res.redirect('/');
