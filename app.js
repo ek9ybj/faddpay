@@ -64,8 +64,11 @@ app.use(expressValidator({
 }));
 
 // Set locals
-app.locals.sitename = config.sitename;
-app.locals.siteurl = config.siteurl;
+app.all('*', function(req, res, next) {
+    res.locals.sitename = config.sitename;
+    res.locals.siteurl = config.siteurl;
+    next();
+});
 
 // Home Route
 app.get('/', function(req, res) {
