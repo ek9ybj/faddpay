@@ -1,0 +1,6 @@
+[[? locals.user ]]
+    <li><a href="/user/logout">Log out</a></li>
+[[??]]
+    <li [[? locals.tab == 'login']] class="uk-active" [[?]]><a href="/user/login">Login</a></li>
+    <li [[? locals.tab == 'register']] class="uk-active" [[?]]><a href="/user/register">Register</a></li>
+[[?]]

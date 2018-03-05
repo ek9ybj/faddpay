@@ -67,6 +67,7 @@ app.use(expressValidator({
 app.all('*', function(req, res, next) {
     res.locals.sitename = config.sitename;
     res.locals.siteurl = config.siteurl;
+    res.locals.user = req.session.user || null;
     next();
 });
 

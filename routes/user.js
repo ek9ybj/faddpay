@@ -21,17 +21,43 @@ router.post('/register', function(req, res) {
 
 // Login Form
 router.get('/login', function(req, res) {
-    res.send('todo');
+    //req.flash('messages', { type: 'success', message: 'Test' });
+    res.locals.tab = 'login';
+    res.locals.messages = req.flash('messages');
+    res.render('login');
 });
 
 // Login Request
 router.post('/login', function(req, res) {
-    res.send('todo');
+    const email = req.body.email;
+    const password = req.body.password;
+
+    User.findOne({ email: email }, function(err, user) {
+        if(user) {
+            //bcrypt.compare(password, user.password, function(err, match) {
+            let match = user.password = password; //remove after a working registration that creates the bcrypt hashes
+                if(match) {
+                    req.session.user = user;
+                    res.redirect('/');
+                } else {
+                    req.flash('messages', { type: 'danger', message: 'Invalid e-mail or password!' });
+                    res.redirect('/user/login');
+                }
+            //});
+        } else {
+            req.flash('messages', { type: 'danger', message: 'Invalid e-mail or password!' });
+            res.redirect('/user/login');
+        }
+    });
 });
 
 // Logout
 router.get('/logout', function(req, res) {
-    res.send('todo');
+    req.session.user = null;
+    req.flash('messages', { type: 'success', message: 'You\'ve logged out!' });
+    res.redirect('/user/login');
 });
+
+//todo: isAuthenticated()
 
 module.exports = router;

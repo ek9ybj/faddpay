@@ -13,20 +13,21 @@
         </div>
         <div class="uk-navbar-right uk-margin-right uk-visible@m">
             <ul class="uk-navbar-nav">
-                <li>Item</li>
+                [[= partial('navlist.html') ]]
             </ul>
         </div>
         <div class="uk-navbar-right uk-margin-right uk-hidden@m">
             <a class="uk-icon-link" uk-icon="icon: menu; ratio: 1.7"></a>
             <div class="uk-padding-small" uk-dropdown="mode: click; pos: bottom-right">
                 <ul class="uk-nav uk-dropdown-nav uk-nav-parent-icon" uk-nav>
-                    <li>Item</li>
+                    [[= partial('navlist.html') ]]
                 </ul>
             </div>
         </div>
     </nav>
     <hr class="uk-margin-remove">
     <div class="uk-container uk-margin-small-top" uk-height-viewport="expand: true">
+        [[= partial('messages.html') ]]
         [[= layout.body ]]
     </div>
     <hr class="uk-margin-remove">

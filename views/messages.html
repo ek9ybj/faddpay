@@ -1,0 +1,8 @@
+<div id="messages">
+        [[ for(m in locals.messages) { ]]
+            <div class="uk-alert-[[= model.messages[m].type ]] uk-margin-small" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                [[= locals.messages[m].message ]]
+            </div>
+        [[ } ]]
+    </div>
