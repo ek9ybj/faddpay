@@ -1,0 +1,33 @@
+---
+layout: layout.html
+---
+[[##body:
+    <div class="uk-container uk-flex uk-flex-center">
+        <form action="/user/register" method="post">
+            <fieldset class="uk-fieldset">
+                <legend class="uk-legend">Register</legend>
+                <div class="uk-margin">
+                    <label for="name">Name</label><br>
+                    <input id="name" name="name" class="uk-input uk-form-width-large" type="text" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="email">E-mail address</label><br>
+                    <input id="email" name="email" class="uk-input uk-form-width-large" type="text" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="password">Password</label><br>
+                    <input id="password" name="password" class="uk-input uk-form-width-large" type="password" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="password2">Password Confirm</label><br>
+                    <input id="password2" name="password2" class="uk-input uk-form-width-large" type="password" required>
+                </div>
+                <div class="uk-margin uk-clearfix">
+                    <div class="uk-float-left">
+                        <button class="uk-button uk-button-default" type="submit">Submit</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+#]]

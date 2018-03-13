@@ -56,8 +56,9 @@ app.use(expressValidator({
         }
 
         return {
+            type: 'danger',
             param: formParam,
-            msg: msg,
+            message: msg,
             value: value
         };
     }
