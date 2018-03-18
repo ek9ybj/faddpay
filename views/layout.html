@@ -10,17 +10,20 @@
     <nav class="uk-navbar-container" style="height:52px;" uk-navbar>
         <div class="uk-navbar-left">
             <a class="uk-navbar-item uk-logo" href="/">[[= locals.sitename ]]</a>
+            <ul class="uk-nav uk-dropdown-nav uk-nav-parent-icon" uk-nav>
+                [[= partial('navlistLeft.html') ]]
+            </ul>
         </div>
         <div class="uk-navbar-right uk-margin-right uk-visible@m">
             <ul class="uk-navbar-nav">
-                [[= partial('navlist.html') ]]
+                [[= partial('navlistRight.html') ]]
             </ul>
         </div>
         <div class="uk-navbar-right uk-margin-right uk-hidden@m">
             <a class="uk-icon-link" uk-icon="icon: menu; ratio: 1.7"></a>
             <div class="uk-padding-small" uk-dropdown="mode: click; pos: bottom-right">
                 <ul class="uk-nav uk-dropdown-nav uk-nav-parent-icon" uk-nav>
-                    [[= partial('navlist.html') ]]
+                    [[= partial('navlistRight.html') ]]
                 </ul>
             </div>
         </div>
