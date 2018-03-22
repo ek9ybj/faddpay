@@ -22,13 +22,13 @@ A fejlesztés közben folyamatos tesztelés történik.
 
 Végpontok
 ------
-- /user/register : regisztráció
-- /user/login : bejelentkezés
-- /account : felhasználói főoldal
-- /account/topup : egyenleg feltöltése
-- /account/history : tranzakciós előzmények
-- /payment/send : utalás másik felhasználónak
-- /payment/request : fizetési közelezettség létrehozása
+- /user/register    : regisztráció
+- /user/login       : bejelentkezés
+- /account          : felhasználói főoldal
+- /account/topup    : egyenleg feltöltése
+- /account/history  : tranzakciós előzmények
+- /payment/send     : utalás másik felhasználónak
+- /payment/request  : fizetési közelezettség létrehozása
 
 Csapattagok
 ------
