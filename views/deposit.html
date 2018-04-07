@@ -7,7 +7,15 @@ layout: layout.html
             <fieldset class="uk-fieldset">
                 <legend class="uk-legend">Deposit</legend>
                 <div class="uk-margin">
-                    <label for="amount">Amount to deposit</label><br>
+                    <label for="currency">The currency to deposit</label><br>
+                    <select id="currency" name="currency" class="uk-input uk-select" required>
+                            [[ for(c in locals.currencies) { ]]
+                                <option value= [[= locals.currencies[c]._id]] >[[= locals.currencies[c].name ]]</option>
+                            [[ } ]]
+                    </select>
+                </div>
+                <div class="uk-margin">   
+                    <label for="amount">Amount of deposit</label><br>
                     <input id="amount" name="amount" class="uk-input uk-form-width-large" type="text" required>
                 </div>
                 <div class="uk-margin uk-clearfix">

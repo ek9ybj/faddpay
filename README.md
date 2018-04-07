@@ -28,7 +28,7 @@ Végpontok
 - /account/deposit : egyenleg feltöltése
 - /account/history : tranzakciós előzmények
 - /payment/send : utalás másik felhasználónak
-- /payment/request : fizetési közelezettség létrehozása
+- /payment/request : fizetési kötelezettség létrehozása
 
 Csapattagok
 ------

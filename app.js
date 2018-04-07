@@ -79,7 +79,7 @@ app.get('/', function(req, res) {
 
 // Routes
 app.use('/user', require('./routes/user'));
-app.use('/money',require('./routes/money'));
+app.use('/money', require('./routes/money'));
 
 // Catch-all Route
 app.all('*', function(req, res) {

@@ -8,6 +8,10 @@ const MoneySchema = mongoose.Schema({
      balance: {
          type: Number,
          require: true
+     },
+     currencyId: {
+         type: String,
+         require: true
      }
 })
 
