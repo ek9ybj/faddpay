@@ -29,6 +29,7 @@ Végpontok
 - /account/history : tranzakciós előzmények
 - /payment/send : utalás másik felhasználónak
 - /payment/request : fizetési kötelezettség létrehozása
+- /payment/request/id : adott fizetési kötelezettség
 
 Csapattagok
 ------
