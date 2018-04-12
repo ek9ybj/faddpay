@@ -4,5 +4,6 @@ module.exports = {
     database: {
         mongodb: 'mongodb://localhost:27017/faddpay',
         redis: ''
-    }
+    },
+    currencies: ['EUR', 'USD', 'HUF']
 }

@@ -10,14 +10,14 @@ const config = require('../config.js');
 let User = require('../models/user');
 
 // Registration Form
-router.get('/register', function(req, res) {
+router.get('/register', function (req, res) {
     res.locals.tab = 'register';
     res.locals.messages = req.flash('messages');
     res.render('register');
 });
 
 // Registration Request
-router.post('/register', function(req, res) {
+router.post('/register', function (req, res) {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
@@ -32,31 +32,31 @@ router.post('/register', function(req, res) {
 
     let errors = req.validationErrors();
 
-    if(errors){
-        console.log(errors);
+    if (errors) {
         req.flash('messages', errors);
         res.redirect('/user/register');
     }
-    else{
+    else {
         let newUser = new User({
-            name:name,
-            email:email,
-            password:password,
-            created:Date.now()
+            name: name,
+            email: email,
+            password: password,
+            created: Date.now(),
+            balances: []
         });
 
-        bcrypt.genSalt(10, function(err, salt){
-            bcrypt.hash(newUser.password, salt, function(err, hash){
-                if(err){
+        bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(newUser.password, salt, function (err, hash) {
+                if (err) {
                     console.log(err);
                 }
                 newUser.password = hash;
-                newUser.save(function(err){
-                    if(err){
+                newUser.save(function (err) {
+                    if (err) {
                         console.log(err);
                         return;
-                    }else{
-                        req.flash('messages', { type: 'success', message: 'You are now registered and can log in.'});
+                    } else {
+                        req.flash('messages', { type: 'success', message: 'You are now registered and can log in.' });
                         res.redirect('/user/login');
                     }
                 });
@@ -66,7 +66,7 @@ router.post('/register', function(req, res) {
 });
 
 // Login Form
-router.get('/login', function(req, res) {
+router.get('/login', function (req, res) {
     //req.flash('messages', { type: 'success', message: 'Test' });
     res.locals.tab = 'login';
     res.locals.messages = req.flash('messages');
@@ -74,15 +74,15 @@ router.get('/login', function(req, res) {
 });
 
 // Login Request
-router.post('/login', function(req, res) {
+router.post('/login', function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({ email: email }, function(err, user) {
-        if(user) {
-            bcrypt.compare(password, user.password, function(err, match) {
-            //let match = user.password == password; //remove after a working registration that creates the bcrypt hashes
-                if(match) {
+    User.findOne({ email: email }, function (err, user) {
+        if (user) {
+            bcrypt.compare(password, user.password, function (err, match) {
+                //let match = user.password == password; //remove after a working registration that creates the bcrypt hashes
+                if (match) {
                     req.session.user = user;
                     res.redirect('/');
                 } else {
@@ -98,7 +98,7 @@ router.post('/login', function(req, res) {
 });
 
 // Logout
-router.get('/logout', function(req, res) {
+router.get('/logout', function (req, res) {
     req.session.user = null;
     req.flash('messages', { type: 'success', message: 'You\'ve logged out!' });
     res.redirect('/user/login');

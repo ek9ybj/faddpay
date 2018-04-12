@@ -19,6 +19,10 @@ const UserSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    balances: {
+        type: Array,
+        required: true
+    }
 });
 
 const User = module.exports = mongoose.model('User', UserSchema);

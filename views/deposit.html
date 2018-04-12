@@ -10,7 +10,7 @@ layout: layout.html
                     <label for="currency">The currency to deposit</label><br>
                     <select id="currency" name="currency" class="uk-input uk-select" required>
                             [[ for(c in locals.currencies) { ]]
-                                <option value= [[= locals.currencies[c]._id]] >[[= locals.currencies[c].name ]]</option>
+                                <option value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
                             [[ } ]]
                     </select>
                 </div>
