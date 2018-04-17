@@ -74,12 +74,16 @@ app.all('*', function(req, res, next) {
 
 // Home Route
 app.get('/', function(req, res) {
-    res.render('home');
+    if(res.locals.user) {
+        res.redirect('/user');
+    } else {
+        res.render('guest');
+    }
 });
 
 // Routes
 app.use('/user', require('./routes/user'));
-app.use('/money', require('./routes/money'));
+app.use('/account', require('./routes/account'));
 
 // Catch-all Route
 app.all('*', function(req, res) {

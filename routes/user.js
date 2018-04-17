@@ -3,21 +3,29 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 
+const middleware = require('../middlewares.js');
+
 // Get Configs
 const config = require('../config.js');
 
 // Models
 let User = require('../models/user');
 
+// Home Route
+router.get('/', middleware.isAuthenticated(true), function(req, res) {
+    res.locals.messages = req.flash('messages');
+    res.render('home');
+});
+
 // Registration Form
-router.get('/register', function (req, res) {
+router.get('/register', middleware.isAuthenticated(false), function (req, res) {
     res.locals.tab = 'register';
     res.locals.messages = req.flash('messages');
     res.render('register');
 });
 
 // Registration Request
-router.post('/register', function (req, res) {
+router.post('/register', middleware.isAuthenticated(false), function (req, res) {
     const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
@@ -42,7 +50,7 @@ router.post('/register', function (req, res) {
             email: email,
             password: password,
             created: Date.now(),
-            balances: []
+            balances: {}
         });
 
         bcrypt.genSalt(10, function (err, salt) {
@@ -66,7 +74,7 @@ router.post('/register', function (req, res) {
 });
 
 // Login Form
-router.get('/login', function (req, res) {
+router.get('/login', middleware.isAuthenticated(false), function (req, res) {
     //req.flash('messages', { type: 'success', message: 'Test' });
     res.locals.tab = 'login';
     res.locals.messages = req.flash('messages');
@@ -74,7 +82,7 @@ router.get('/login', function (req, res) {
 });
 
 // Login Request
-router.post('/login', function (req, res) {
+router.post('/login', middleware.isAuthenticated(false), function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
 
@@ -98,12 +106,10 @@ router.post('/login', function (req, res) {
 });
 
 // Logout
-router.get('/logout', function (req, res) {
+router.get('/logout', middleware.isAuthenticated(true), function (req, res) {
     req.session.user = null;
     req.flash('messages', { type: 'success', message: 'You\'ve logged out!' });
     res.redirect('/user/login');
 });
-
-//todo: isAuthenticated()
 
 module.exports = router;

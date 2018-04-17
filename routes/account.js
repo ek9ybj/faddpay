@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const config = require('../config.js');
+const middleware = require('../middlewares.js');
 
 let Money = require('../models/money');
 let Balance = require('../models/balance');
+let User = require('../models/user');
 
-router.get('/deposit', function (req, res) {
+router.get('/deposit', middleware.isAuthenticated(true), function (req, res) {
     res.locals.tab = 'deposit';
 
     /*
@@ -44,7 +46,7 @@ router.get('/deposit', function (req, res) {
     res.render('deposit');
 })
 
-router.post('/deposit', function (req, res) {
+router.post('/deposit', middleware.isAuthenticated(true), function (req, res) {
     const amount = req.body.amount;
     const currency = req.body.currency;
 
@@ -53,16 +55,30 @@ router.post('/deposit', function (req, res) {
     req.checkBody('currency', 'Currency is required!').notEmpty();
     req.checkBody('currency', 'Invalid currency!').custom(value => {
         return config.currencies.includes(currency);
-      });
+    });
 
     let errors = req.validationErrors();
 
     if (errors) {
         req.flash('messages', errors);
-        res.redirect('/money/deposit');
+        res.redirect('/account/deposit');
     } else {
-        //redo
+        if (!(currency in req.session.user.balances)) {
+            req.session.user.balances[currency] = Number(amount);
+        } else {
+            req.session.user.balances[currency] += Number(amount);
+        }
 
+        User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances } }, {new: true}, function(err, user) {
+            if (err) {
+                console.log(err);
+                return;
+            }
+            req.session.user = user;
+            console.log(req.session.user);
+            req.flash('messages', { type: 'success', message: currency + ' ' + amount + ' has been deposited in your account!' });
+            res.redirect('/user');
+        });
         //Money.findOne({ userId: req.session.user._id, currencyId: currency }, function (err, money) {
         //    if (money) {
         //        money.balance = +money.balance + +amount;

@@ -20,9 +20,9 @@ const UserSchema = mongoose.Schema({
         required: true
     },
     balances: {
-        type: Array,
+        type: Object,
         required: true
     }
-});
+}, { minimize: false });
 
 const User = module.exports = mongoose.model('User', UserSchema);
