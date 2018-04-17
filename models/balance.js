@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const CurrencySchema = mongoose.Schema({
+const BalanceSchema = mongoose.Schema({
     name: {
         type: String,
         require: true
@@ -11,4 +11,4 @@ const CurrencySchema = mongoose.Schema({
     }
 })
 
-const Currency = module.exports = mongoose.model('Currency', CurrencySchema);
+const Balance = module.exports = mongoose.model('Balance', BalanceSchema);

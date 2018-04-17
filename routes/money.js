@@ -4,7 +4,7 @@ const router = express.Router();
 const config = require('../config.js');
 
 let Money = require('../models/money');
-let Currency = require('../models/currency');
+let Balance = require('../models/balance');
 
 router.get('/deposit', function (req, res) {
     res.locals.tab = 'deposit';
