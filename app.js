@@ -91,6 +91,6 @@ app.all('*', function(req, res) {
 });
 
 // Start Server
-app.listen(3000, function() {
-    console.log('[Express] Listening on localhost:3000');
+app.listen(4000, function() {
+    console.log('[Express] Listening on localhost:4000');
 });
