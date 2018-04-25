@@ -1,0 +1,24 @@
+---
+layout: layout.html
+---
+[[##body:
+<table class="uk-table uk-table-striped">
+    <caption></caption>
+    <thead>
+        <tr>
+            <th>Action</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+   
+    <tbody>
+         [[ for(h in locals.user.histories) { ]]
+            <tr>
+                <td>[[= h ]]</td>
+                <td>[[=  locals.user.histories[h] ]]</td>
+
+            </tr>
+        [[ } ]]
+    </tbody>
+</table>             
+#]]

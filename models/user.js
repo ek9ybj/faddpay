@@ -22,6 +22,10 @@ const UserSchema = mongoose.Schema({
     balances: {
         type: Object,
         required: true
+    },
+    histories: {
+        type: Object,
+        required: true
     }
 }, { minimize: false });
 

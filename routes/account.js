@@ -4,35 +4,10 @@ const router = express.Router();
 const config = require('../config.js');
 const middleware = require('../middlewares.js');
 
-let Money = require('../models/money');
-let Balance = require('../models/balance');
 let User = require('../models/user');
 
 router.get('/deposit', middleware.isAuthenticated(true), function (req, res) {
     res.locals.tab = 'deposit';
-
-    /*
-    new Currency({  //uncomment for some currency, dont forget to comment back once it run
-        name:"HUF",
-        value:1
-    }).save(function(err){
-        if(err){
-            console.log(err);
-            return;
-        }
-            
-    });
-    new Currency({
-        name:"USD",
-        value:250
-    }).save(function(err){
-        if(err){
-            console.log(err);
-            return;
-        }
-            
-    });
-    */
 
     //Currency.find({}, function (err, currencies) {
     //    if (err) {
@@ -68,8 +43,16 @@ router.post('/deposit', middleware.isAuthenticated(true), function (req, res) {
         } else {
             req.session.user.balances[currency] += Number(amount);
         }
-
-        User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances } }, {new: true}, function(err, user) {
+        const history = new Date().toISOString().split('.')[0].replace("T"," ")+": " + currency + " deposit";
+       
+        if (!(history in req.session.user.histories)) {
+            req.session.user.histories[history] = Number(amount);
+        } else {
+            req.session.user.histories[history] += Number(amount);
+        }
+        req.session.user.histories[history] = Number(amount);
+       
+        User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances }, '$set': { histories: req.session.user.histories} }, {new: true}, function(err, user) {
             if (err) {
                 console.log(err);
                 return;
@@ -79,38 +62,14 @@ router.post('/deposit', middleware.isAuthenticated(true), function (req, res) {
             req.flash('messages', { type: 'success', message: currency + ' ' + amount + ' has been deposited in your account!' });
             res.redirect('/user');
         });
-        //Money.findOne({ userId: req.session.user._id, currencyId: currency }, function (err, money) {
-        //    if (money) {
-        //        money.balance = +money.balance + +amount;
-        //        money.save(function (err) {
-        //            if (err) {
-        //                console.log(err);
-        //                return;
-        //            } else {
-        //                req.flash('messages', { type: 'succes', message: 'Payment successful.' })
-        //                res.redirect('/');
-        //            }
-        //        })
-        //    } else {
-        //        let newMoney = new Money({
-        //            userId: req.session.user._id,
-        //            balance: amount,
-        //            currencyId: currency
-        //        })
-        //        newMoney.save(function (err) {
-        //            if (err) {
-        //                console.log(err);
-        //                return;
-        //            } else {
-        //                req.flash('messages', { type: 'succes', message: 'Payment successful.' })
-        //                res.redirect('/');
-        //            }
-        //        })
-        //    }
-        //
-        //})
-
+      
     }
+})
+
+router.get('/history', middleware.isAuthenticated(true), function (req, res){
+    res.locals.tab = 'history';
+    res.locals.messages = req.flash('messages');
+    res.render('history');
 })
 
 module.exports = router;

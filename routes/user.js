@@ -50,7 +50,9 @@ router.post('/register', middleware.isAuthenticated(false), function (req, res) 
             email: email,
             password: password,
             created: Date.now(),
-            balances: {}
+            balances: {},
+            histories: {}
+            
         });
 
         bcrypt.genSalt(10, function (err, salt) {
