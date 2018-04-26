@@ -84,6 +84,7 @@ app.get('/', function(req, res) {
 // Routes
 app.use('/user', require('./routes/user'));
 app.use('/account', require('./routes/account'));
+app.use('/payment', require('./routes/payment'));
 
 // Catch-all Route
 app.all('*', function(req, res) {
