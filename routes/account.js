@@ -52,7 +52,7 @@ router.post('/deposit', middleware.isAuthenticated(true), function (req, res) {
         }
         req.session.user.histories[history] = Number(amount);
        
-        User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances }, '$set': { histories: req.session.user.histories} }, {new: true}, function(err, user) {
+        User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances, histories: req.session.user.histories } }, {new: true}, function(err, user) {
             if (err) {
                 console.log(err);
                 return;
