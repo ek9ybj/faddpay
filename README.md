@@ -24,7 +24,7 @@ Végpontok
 ------
 - /user/register : regisztráció
 - /user/login : bejelentkezés
-- /account : felhasználói főoldal
+- /user : felhasználói főoldal
 - /account/deposit : egyenleg feltöltése
 - /account/history : tranzakciós előzmények
 - /payment/send : utalás másik felhasználónak
