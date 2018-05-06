@@ -5,7 +5,7 @@ Beadandó feladat az ELTE IK - Projekt eszközök kurzushoz.
 Rövid leírás
 ------
 
-A projekt célja egy online fizetési és számlavezetési felület.
+A projekt célja egy online fizetési és számlavezetési felület megvalósítása.
 
 A felhasználók regisztráció után belső számlákat vezethetnek, feltölthetik azt külső forrásból, illetve kifizetéseket kezdeményezhetnek a belső számláról. A számlák automatikusan létrejönnek, ha egy adott beérkező devizanemnek megfelelő számla még nem létezik, illetve megszűnnek, ha az adott számla egyenlege lenullázódik. 
 
