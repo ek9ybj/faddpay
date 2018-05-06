@@ -24,7 +24,9 @@
     "express-dot-engine": "^1.0.7",
     "express-session": "^1.15.6",
     "express-validator": "^5.0.2",
+    "g": "^2.0.1",
     "mongoose": "^5.0.7",
-    "nodemon": "^1.17.1"
+    "nodemon": "^1.17.1",
+    "npm": "^6.0.0"
   }
 }

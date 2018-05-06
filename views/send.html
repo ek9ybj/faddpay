@@ -5,11 +5,7 @@ layout: layout.html
     <div class="uk-container uk-flex uk-flex-center">
         <form action="/payment/send" method="post">
             <fieldset class="uk-fieldset">
-                <legend class="uk-legend">Send</legend>
-                <div class="uk-margin">
-                    <label for="name">Name</label><br>
-                    <input id="name" name="name" class="uk-input uk-form-width-large" type="text" required>
-                </div>
+                <h2>Send Funds</h2>
                 <div class="uk-margin">
                     <label for="email">E-mail address</label><br>
                     <input id="email" name="email" class="uk-input uk-form-width-large" type="text" required>
@@ -18,7 +14,7 @@ layout: layout.html
                     <label for="currency">Currency</label><br>
                     <select id="currency" name="currency" class="uk-input uk-select" required>
                             [[ for(c in locals.currencies) { ]]
-                                <option value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
+                                <option class="uk-background-secondary" value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
                             [[ } ]]
                     </select>
                 </div>

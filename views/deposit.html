@@ -10,7 +10,7 @@ layout: layout.html
                     <label for="currency">Currency</label><br>
                     <select id="currency" name="currency" class="uk-input uk-select" required>
                             [[ for(c in locals.currencies) { ]]
-                                <option value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
+                                <option class="uk-background-secondary" value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
                             [[ } ]]
                     </select>
                 </div>

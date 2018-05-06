@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/uikit/3.0.0-beta.40/css/uikit.min.css" />
     <title>[[= locals.sitename]]</title>
 </head>
-<body>
-    <nav class="uk-navbar-container" style="height:52px;" uk-navbar>
+<body class="uk-background-secondary uk-light">
+    <nav class="uk-navbar-container" style="height:52px; background-color: #333;" uk-navbar>
         <div class="uk-navbar-left">
             <a class="uk-navbar-item uk-logo" href="/">[[= locals.sitename ]]</a>
         </div>
@@ -18,7 +18,7 @@
         </div>
         <div class="uk-navbar-right uk-margin-right uk-hidden@m">
             <a class="uk-icon-link" uk-icon="icon: menu; ratio: 1.7"></a>
-            <div class="uk-padding-small" uk-dropdown="mode: click; pos: bottom-right">
+            <div class="uk-padding-small" style="background-color: #332;" uk-dropdown="mode: click; pos: bottom-right">
                 <ul class="uk-nav uk-dropdown-nav uk-nav-parent-icon" uk-nav>
                     [[= partial('navlistRight.html') ]]
                 </ul>

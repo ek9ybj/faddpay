@@ -10,9 +10,18 @@ const config = require('../config.js');
 
 // Models
 let User = require('../models/user');
+let Transaction = require('../models/transaction');
 
 // Home Route
-router.get('/', middleware.isAuthenticated(true), function(req, res) {
+router.get('/', middleware.isAuthenticated(true), function (req, res) {
+    Transaction.find({$or: [{ 'sender.id': req.session.user._id }, { 'recipient.id': req.session.user._id }] }, [], { limit: 5, sort: { date: -1 } }, function (err, transactions) {
+        if(err) {
+            console.log(err);
+            return;
+        } else {
+            res.locals.transactions = transactions;
+        }
+    });
     res.locals.messages = req.flash('messages');
     res.render('home');
 });
@@ -43,16 +52,15 @@ router.post('/register', middleware.isAuthenticated(false), function (req, res) 
     if (errors) {
         req.flash('messages', errors);
         res.redirect('/user/register');
-    }
-    else {
+    } else {
         let newUser = new User({
             name: name,
             email: email,
             password: password,
             created: Date.now(),
             balances: {},
-            histories: {}
-            
+            deposits: [],
+            lastActivity: Date.now()
         });
 
         bcrypt.genSalt(10, function (err, salt) {
@@ -66,7 +74,7 @@ router.post('/register', middleware.isAuthenticated(false), function (req, res) 
                         console.log(err);
                         return;
                     } else {
-                        req.flash('messages', { type: 'success', message: 'You are now registered and can log in.' });
+                        req.flash('messages', { type: '', message: 'You are now registered and can log in.' });
                         res.redirect('/user/login');
                     }
                 });
@@ -96,12 +104,12 @@ router.post('/login', middleware.isAuthenticated(false), function (req, res) {
                     req.session.user = user;
                     res.redirect('/');
                 } else {
-                    req.flash('messages', { type: 'danger', message: 'Invalid e-mail or password!' });
+                    req.flash('messages', { type: '', message: 'Invalid e-mail or password!' });
                     res.redirect('/user/login');
                 }
             });
         } else {
-            req.flash('messages', { type: 'danger', message: 'Invalid e-mail or password!' });
+            req.flash('messages', { type: '', message: 'Invalid e-mail or password!' });
             res.redirect('/user/login');
         }
     });
@@ -110,7 +118,7 @@ router.post('/login', middleware.isAuthenticated(false), function (req, res) {
 // Logout
 router.get('/logout', middleware.isAuthenticated(true), function (req, res) {
     req.session.user = null;
-    req.flash('messages', { type: 'success', message: 'You\'ve logged out!' });
+    req.flash('messages', { type: '', message: 'You\'ve logged out!' });
     res.redirect('/user/login');
 });
 

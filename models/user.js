@@ -23,8 +23,22 @@ const UserSchema = mongoose.Schema({
         type: Object,
         required: true
     },
-    histories: {
-        type: Object,
+    deposits: [{
+        currency: {
+            type: String,
+            required: true
+        },
+        amount: {
+            type: Number,
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        }
+    }],
+    lastActivity: {
+        type: Date,
         required: true
     }
 }, { minimize: false });

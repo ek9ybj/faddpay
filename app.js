@@ -68,13 +68,27 @@ app.use(expressValidator({
 app.all('*', function(req, res, next) {
     res.locals.sitename = config.sitename;
     res.locals.siteurl = config.siteurl;
-    res.locals.user = req.session.user || null;
-    next();
+    if(req.session.user) {
+        User.findByIdAndUpdate(req.session.user._id, {$set: {lastActivity: Date.now()}}, {new: true}, function (err, user) {
+            if(err) {
+                console.log(err);
+                req.session.user = null;
+                res.locals.user =  null;
+            } else {
+                req.session.user = user;
+                res.locals.user = user;
+            }
+            next();
+        });
+    } else {
+        res.locals.user = null;
+        next();
+    }
 });
 
 // Home Route
 app.get('/', function(req, res) {
-    if(res.locals.user) {
+    if(req.session.user) {
         res.redirect('/user');
     } else {
         res.render('guest');
@@ -92,6 +106,6 @@ app.all('*', function(req, res) {
 });
 
 // Start Server
-app.listen(4000, function() {
-    console.log('[Express] Listening on localhost:4000');
+app.listen(config.port, function() {
+    console.log('[Express] Listening on localhost:' + config.port);
 });

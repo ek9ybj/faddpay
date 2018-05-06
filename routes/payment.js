@@ -9,9 +9,9 @@ const config = require('../config.js');
 
 // Models
 let User = require('../models/user');
+let Transaction = require('../models/transaction');
 
-// Send
-
+// Send Form
 router.get('/send', middleware.isAuthenticated(true), function (req, res) {
     res.locals.tab = 'send';
     res.locals.currencies = config.currencies;
@@ -19,67 +19,83 @@ router.get('/send', middleware.isAuthenticated(true), function (req, res) {
     res.render('send');
 })
 
+// Send
 router.post('/send', middleware.isAuthenticated(true), function (req, res) {
-    const amount = req.body.amount;
+    const amount = Number(req.body.amount);
     const currency = req.body.currency;
     const email = req.body.email;
-    const name = req.body.name;
 
     req.checkBody('email', "E-mail is required!").notEmpty();
     req.checkBody('email', "E-mail is invalid!").isEmail();
-    req.checkBody('name', "Name is required!").notEmpty();
     req.checkBody('amount', "Amount is required!").notEmpty();
+    req.checkBody('amount', 'Invalid amount!').isFloat({ gt: 0.0 });
     req.checkBody('currency', 'Invalid currency!').custom(value => {
         return config.currencies.includes(currency);
     });
-    var receiverid;
     let errors = req.validationErrors();
-    User.findOne({ email: email }, function (err, result) {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            //Sending out
-            if ((result.name != name) && errors) {
-                req.flash('messages', errors);
-                res.redirect('/payment/send');
-            } else {
-                console.log(result.id);
-                receiverid = result.id;
-                if (!(currency in result.balances)) {
-                    result.balances[currency] = Number(amount);
-                } else {
-                    result.balances[currency] += Number(amount);
-                }
-                const history2 = new Date().toISOString().split('.')[0].replace("T", " ") + ": " + currency + " receive";
-                result.histories[history2] = Number(amount);
-                User.findByIdAndUpdate(receiverid, { '$set': { balances: result.balances, histories: result.histories } }, { new: true }, function (err, user) {
+
+    if (errors) {
+        req.flash('messages', errors);
+        res.redirect('/payment/send');
+    } else {
+        if(email != req.session.user.email) {
+            if (currency in req.session.user.balances && req.session.user.balances[currency] >= amount) {
+                User.findOne({ email: email }, function (err, target) {
                     if (err) {
                         console.log(err);
                         return;
+                    } else {
+                        if (target) {
+                            req.session.user.balances[currency] -= amount;
+                            User.findByIdAndUpdate(req.session.user._id, { $set: { balances: req.session.user.balances } }, function (err, user) {
+                                if (err) {
+                                    console.log(err);
+                                    return;
+                                } else {
+                                    if (!(currency in target.balances)) {
+                                        target.balances[currency] = amount;
+                                    } else {
+                                        target.balances[currency] += amount;
+                                    }
+                                    User.findByIdAndUpdate(target._id, { $set: { balances: target.balances }}, function (err, target) {
+                                        if(err) {
+                                            console.log(err);
+                                            return;
+                                        } else {
+                                            new Transaction({
+                                                sender: {
+                                                    id: req.session.user._id,
+                                                    email: req.session.user.email
+                                                },
+                                                recipient: {
+                                                    id: target._id,
+                                                    email: target.email
+                                                },
+                                                currency: currency,
+                                                amount: amount,
+                                                date: Date.now()
+                                            }).save();
+                                            req.flash('messages', { type: '', message: currency + ' ' + amount.toLocaleString() + ' has been sent to ' + email + '!' });
+                                            res.redirect('/payment/send');
+                                        }
+                                    });
+                                }
+                            });
+                        } else {
+                            req.flash('messages', { type: '', message: 'Couldn\'t found any user with the given e-mail!' });
+                            res.redirect('/payment/send');
+                        }
                     }
                 });
-
+            } else {
+                req.flash('messages', { type: '', message: 'You don\'t have enough balance for this transaction!' });
+                res.redirect('/payment/send');
             }
-
+        } else {
+            req.flash('messages', { type: '', message: 'Invalid email!' });
+            res.redirect('/payment/send');
         }
-    });
-    //Sender
-    if (!(currency in req.session.user.balances)) {
-        req.session.user.balances[currency] = (Number(amount) * (-1));
-    } else {
-        req.session.user.balances[currency] -= Number(amount);
     }
-    const history = new Date().toISOString().split('.')[0].replace("T", " ") + ": " + currency + " send";
-    req.session.user.histories[history] = Number(amount);
-    User.findByIdAndUpdate(req.session.user._id, { '$set': { balances: req.session.user.balances, histories: req.session.user.histories } }, { new: true }, function (err, user) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-    });
-    req.flash('messages', { type: 'success', message: currency + ' ' + amount + ' has been sent to ' + name + '!' });
-    res.redirect('/user');
 });
 
 module.exports = router;
