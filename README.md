@@ -30,6 +30,7 @@ Végpontok
 - /payment/send : utalás másik felhasználónak
 - /payment/request : fizetési kötelezettség létrehozása
 - /payment/request/id : adott fizetési kötelezettség
+- /admin : felhasználók kezelése
 
 Csapattagok
 ------
