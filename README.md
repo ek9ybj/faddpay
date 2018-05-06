@@ -20,6 +20,8 @@ Az adatokat tárolásához MongoDB-t használunk, mely egy nem-relációs adatb�
 Egységes fejlesztési környezet a Visual Studio Code, melyben megtalálható beépített kód helyesség ellenőrző és automatikus formázás.
 A fejlesztés közben folyamatos tesztelés történik.
 
+Jenkins: http://195.201.139.237:8080
+
 Végpontok
 ------
 - /user/register : regisztráció
