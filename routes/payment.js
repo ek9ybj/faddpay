@@ -108,6 +108,14 @@ router.get('/request', middleware.isAuthenticated(true), function (req, res) {
     res.render('request');
 });
 
+// Request delete
+router.post('/deleterequest', middleware.isAuthenticated(true), function (req, res) {
+
+    User.findByIdAndUpdate(req.session.user._id, {$pull: {requests: {_id : req.body.id}}}, function (err, target){});
+    req.flash('messages', {type: '', message: 'Request deleted!'});
+    res.redirect('/');
+});
+
 // Request
 router.post('/request', middleware.isAuthenticated(true), function (req, res) {
     const amount = Number(req.body.amount);
@@ -129,16 +137,16 @@ router.post('/request', middleware.isAuthenticated(true), function (req, res) {
         res.redirect('/payment/request');
     } else {
         if(email != req.session.user.email) {
-            User.findOne({ email: email }, function (err, target) {
-                User.findByIdAndUpdate(target._id, { $push: { requests: {recipient: {id: req.session.user._id, email: req.session.user.email}, currency: currency, amount: amount, comment: comment, date: Date.now() } } }, {new: true}, function(err, user) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-                    req.flash('messages', { type: '', message: currency + ' ' + amount.toLocaleString() + ' has been requested!' });
-                    res.redirect('/payment/request');
+                User.findOne({ email: email }, function (err, target) {
+                    User.findByIdAndUpdate(target._id, { $push: { requests: {recipient: {id: req.session.user._id, email: req.session.user.email}, currency: currency, amount: amount, comment: comment, date: Date.now() } } }, {new: true}, function(err, user) {
+                        if (err) {
+                            console.log(err);
+                            return;
+                        }
+                        req.flash('messages', { type: '', message: currency + ' ' + amount.toLocaleString() + ' has been requested!' });
+                        res.redirect('/payment/request');
+                    });
                 });
-            });
         }else{
             req.flash('messages', {type: '', message: 'You can\'t send a request to yourself!'});
             res.redirect('/payment/request');

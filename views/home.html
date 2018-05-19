@@ -31,7 +31,6 @@ layout: layout.html
                 <tbody>
                 [[ let arr = locals.user.requests.sort(function (a, b) {return new Date(b.date) - new Date(a.date);}).slice(0, 5); for(let i = 0; i < arr.length; i++) { ]]
                     <tr><form action="/payment/send" method="post">
-                        <input type="hidden" name="date" value="[[= arr[i].date ]]" />
                         <input type="hidden" name="currency" value="[[= arr[i].currency ]]" />
                         <input type="hidden" name="email" value="[[= arr[i].recipient.email ]]" />
                         <input type="hidden" name="comment" value="[[= arr[i].comment ]]" />
@@ -41,7 +40,11 @@ layout: layout.html
                         <td>[[= arr[i].recipient.email ]]</td>
                         <td>[[= arr[i].comment ]]</td>
                         <td style="color: #CC3131">- [[= arr[i].amount.toLocaleString() ]]</td>
-                        <td><input type="submit"></td>
+                        <td><input type="submit"></form>
+                        <form action="/payment/deleterequest" method="post">
+                        <input type="hidden" name="id" value="[[= arr[i]._id ]]" />
+                        <button type="submit">Delete</button></td>
+                        </form>
                     </form>
                     
                     </tr>
