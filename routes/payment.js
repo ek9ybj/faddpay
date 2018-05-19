@@ -24,6 +24,7 @@ router.post('/send', middleware.isAuthenticated(true), function (req, res) {
     const amount = Number(req.body.amount);
     const currency = req.body.currency;
     const email = req.body.email;
+    const comment = req.body.comment;
 
     req.checkBody('email', "E-mail is required!").notEmpty();
     req.checkBody('email', "E-mail is invalid!").isEmail();
@@ -73,6 +74,7 @@ router.post('/send', middleware.isAuthenticated(true), function (req, res) {
                                                 },
                                                 currency: currency,
                                                 amount: amount,
+                                                comment: comment,
                                                 date: Date.now()
                                             }).save();
                                             req.flash('messages', { type: '', message: currency + ' ' + amount.toLocaleString() + ' has been sent to ' + email + '!' });
@@ -96,6 +98,53 @@ router.post('/send', middleware.isAuthenticated(true), function (req, res) {
             res.redirect('/payment/send');
         }
     }
+});
+
+// Request Form
+router.get('/request', middleware.isAuthenticated(true), function (req, res) {
+    res.locals.tab = 'request';
+    res.locals.currencies = config.currencies;
+    res.locals.messages = req.flash('messages');
+    res.render('request');
+});
+
+// Request
+router.post('/request', middleware.isAuthenticated(true), function (req, res) {
+    const amount = Number(req.body.amount);
+    const currency = req.body.currency;
+    const email = req.body.email;
+    const comment = req.body.comment;
+
+    req.checkBody('email', "E-mail is required!").notEmpty();
+    req.checkBody('email', "E-mail is invalid!").isEmail();
+    req.checkBody('amount', "Amount is required!").notEmpty();
+    req.checkBody('amount', 'Invalid amount!').isFloat({ gt: 0.0 });
+    req.checkBody('currency', 'Invalid currency!').custom(value => {
+        return config.currencies.includes(currency);
+    });
+    let errors = req.validationErrors();
+
+    if (errors) {
+        req.flash('messages', errors);
+        res.redirect('/payment/request');
+    } else {
+        if(email != req.session.user.email) {
+            User.findOne({ email: email }, function (err, target) {
+                User.findByIdAndUpdate(target._id, { $push: { requests: {recipient: {id: req.session.user._id, email: req.session.user.email}, currency: currency, amount: amount, comment: comment, date: Date.now() } } }, {new: true}, function(err, user) {
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+                    req.flash('messages', { type: '', message: currency + ' ' + amount.toLocaleString() + ' has been requested!' });
+                    res.redirect('/payment/request');
+                });
+            });
+        }else{
+            req.flash('messages', {type: '', message: 'You can\'t send a request to yourself!'});
+            res.redirect('/payment/request');
+        }
+    }
+
 });
 
 module.exports = router;

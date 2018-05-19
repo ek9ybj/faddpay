@@ -32,6 +32,7 @@ layout: layout.html
                         <th>Date</th>
                         <th>Sender</th>
                         <th>Recipient</th>
+                        <th>Comment</th>
                         <th>Currency</th>
                         <th>Amount</th>
                     </tr>
@@ -42,6 +43,7 @@ layout: layout.html
                         <td>[[= locals.transactions[i].date ]]</td>
                         <td>[[= locals.transactions[i].sender.email ]]</td>
                         <td>[[= locals.transactions[i].recipient.email ]]</td>
+                        <td>[[= locals.transactions[i].comment ]]</td>
                         <td>[[= locals.transactions[i].currency ]]</td>
                         [[? locals.transactions[i].recipient.email == locals.user.email ]]
                         <td style="color: limegreen">+ [[= locals.transactions[i].amount.toLocaleString() ]]</td>

@@ -37,6 +37,28 @@ const UserSchema = mongoose.Schema({
             required: true
         }
     }],
+    requests: [{
+        recipient: { //email, id
+            type: Object,
+            required: true
+        },
+        currency: {
+            type: String,
+            required: true
+        },
+        amount: {
+            type: Number,
+            required: true
+        },
+        comment: {
+            type: String,
+            required: true
+        },
+        date: {
+            type: Date,
+            required: true
+        }
+    }],
     lastActivity: {
         type: Date,
         required: true

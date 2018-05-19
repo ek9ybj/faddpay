@@ -57,10 +57,11 @@ router.get('/history', middleware.isAuthenticated(true), function (req, res){
             return;
         } else {
             res.locals.transactions = transactions;
+            res.locals.messages = req.flash('messages');
+            res.render('history');
         }
     });
-    res.locals.messages = req.flash('messages');
-    res.render('history');
+
 })
 
 module.exports = router;

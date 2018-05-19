@@ -19,6 +19,10 @@ const TransactionSchema = mongoose.Schema({
         type: Number,
         required: true
     },
+    comment: {
+        type: String,
+        required: false
+    },
     date: {
         type: Date,
         required: true

@@ -17,6 +17,39 @@ layout: layout.html
             [[?]]
         </div>
         <div class="uk-width-1-1">
+            <h4>Recent Requests</h4>
+            <table class="uk-table uk-table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Currency</th>
+                        <th>Recipient address</th>
+                        <th>Comment</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                [[ let arr = locals.user.requests.sort(function (a, b) {return new Date(b.date) - new Date(a.date);}).slice(0, 5); for(let i = 0; i < arr.length; i++) { ]]
+                    <tr><form action="/payment/send" method="post">
+                        <input type="hidden" name="date" value="[[= arr[i].date ]]" />
+                        <input type="hidden" name="currency" value="[[= arr[i].currency ]]" />
+                        <input type="hidden" name="email" value="[[= arr[i].recipient.email ]]" />
+                        <input type="hidden" name="comment" value="[[= arr[i].comment ]]" />
+                        <input type="hidden" name="amount" value="[[= arr[i].amount ]]" />
+                        <td>[[= arr[i].date ]]</td>
+                        <td>[[= arr[i].currency ]]</td>
+                        <td>[[= arr[i].recipient.email ]]</td>
+                        <td>[[= arr[i].comment ]]</td>
+                        <td style="color: #CC3131">- [[= arr[i].amount.toLocaleString() ]]</td>
+                        <td><input type="submit"></td>
+                    </form>
+                    
+                    </tr>
+                [[ } ]]
+                </tbody>
+            </table>
+        </div>
+        <div class="uk-width-1-1">
             <h4>Recent Deposits</h4>
             <table class="uk-table uk-table-striped">
                 <thead>
@@ -27,7 +60,7 @@ layout: layout.html
                     </tr>
                 </thead>
                 <tbody>
-                [[ let arr = locals.user.deposits.sort(function (a, b) {return new Date(b.date) - new Date(a.date);}).slice(0, 5); for(let i = 0; i < arr.length; i++) { ]]
+                [[  arr = locals.user.deposits.sort(function (a, b) {return new Date(b.date) - new Date(a.date);}).slice(0, 5); for(let i = 0; i < arr.length; i++) { ]]
                     <tr>
                         <td>[[= arr[i].date ]]</td>
                         <td>[[= arr[i].currency ]]</td>
@@ -45,6 +78,7 @@ layout: layout.html
                         <th>Date</th>
                         <th>Sender</th>
                         <th>Recipient</th>
+                        <th>Comment</th>
                         <th>Currency</th>
                         <th>Amount</th>
                     </tr>
@@ -55,6 +89,7 @@ layout: layout.html
                         <td>[[= locals.transactions[i].date ]]</td>
                         <td>[[= locals.transactions[i].sender.email ]]</td>
                         <td>[[= locals.transactions[i].recipient.email ]]</td>
+                        <td>[[= locals.transactions[i].comment ]]</td>
                         <td>[[= locals.transactions[i].currency ]]</td>
                         [[? locals.transactions[i].recipient.email == locals.user.email ]]
                         <td style="color: limegreen">+ [[= locals.transactions[i].amount.toLocaleString() ]]</td>
