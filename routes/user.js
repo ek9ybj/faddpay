@@ -60,7 +60,9 @@ router.post('/register', middleware.isAuthenticated(false), function (req, res) 
             created: Date.now(),
             balances: {},
             deposits: [],
-            lastActivity: Date.now()
+            lastActivity: Date.now(),
+            admin: 0,
+            freezed: false
         });
 
         bcrypt.genSalt(10, function (err, salt) {
@@ -101,8 +103,13 @@ router.post('/login', middleware.isAuthenticated(false), function (req, res) {
             bcrypt.compare(password, user.password, function (err, match) {
                 //let match = user.password == password; //remove after a working registration that creates the bcrypt hashes
                 if (match) {
-                    req.session.user = user;
-                    res.redirect('/');
+                    if(user.freezed){
+                        req.flash('messages', {type: '', message: 'Your accout has been freezed until it is under investigation!'});
+                        res.redirect('/');
+                    }else{
+                        req.session.user = user;
+                        res.redirect('/');
+                    }
                 } else {
                     req.flash('messages', { type: '', message: 'Invalid e-mail or password!' });
                     res.redirect('/user/login');

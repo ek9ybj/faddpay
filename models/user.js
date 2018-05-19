@@ -62,6 +62,14 @@ const UserSchema = mongoose.Schema({
     lastActivity: {
         type: Date,
         required: true
+    },
+    admin:{
+        type: Number,
+        required: true
+    },
+    freezed:{
+        type: Boolean,
+        required: true
     }
 }, { minimize: false });
 

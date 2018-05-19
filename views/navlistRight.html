@@ -1,4 +1,7 @@
 [[? locals.user ]]
+    [[? locals.user.admin > 0 ]]
+        <li [[? locals.tab == 'admin']] class="uk-active" [[?]]><a href="/admin">Admin</a></li>
+    [[?]]
     <li [[? locals.tab == 'deposit']] class="uk-active" [[?]]><a href="/account/deposit">Deposit</a></li>
     <li [[? locals.tab == 'history']] class="uk-active" [[?]]><a href="/account/history">History</a></li>
     <li [[? locals.tab == 'send']] class="uk-active" [[?]]><a href="/payment/send">Send</a></li>
