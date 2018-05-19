@@ -1,0 +1,37 @@
+---
+layout: layout.html
+---
+[[##body:
+    <div class="uk-container uk-flex uk-flex-center">
+        <form action="/payment/request" method="post">
+            <fieldset class="uk-fieldset">
+                <h2>Send Request</h2>
+                <div class="uk-margin">
+                    <label for="email">E-mail address</label><br>
+                    <input id="email" name="email" class="uk-input uk-form-width-large" type="text" required>
+                </div>
+                <div class="uk-margin">
+                    <label for="currency">Currency</label><br>
+                    <select id="currency" name="currency" class="uk-input uk-select" required>
+                            [[ for(c in locals.currencies) { ]]
+                                <option class="uk-background-secondary" value= [[= locals.currencies[c] ]] >[[= locals.currencies[c] ]]</option>
+                            [[ } ]]
+                    </select>
+                </div>
+                <div class="uk-margin">   
+                    <label for="amount">Amount</label><br>
+                    <input id="amount" name="amount" class="uk-input uk-form-width-large" type="text" required>
+                </div>
+                <div class="uk-margin">   
+                    <label for="comment">Comment</label><br>
+                    <input id="comment" name="comment" class="uk-input uk-form-width-large" type="textarea">
+                </div>
+                <div class="uk-margin uk-clearfix">
+                    <div class="uk-float-left">
+                        <button class="uk-button uk-button-default" type="submit">Send Request</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+#]]
