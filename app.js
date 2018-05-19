@@ -99,6 +99,7 @@ app.get('/', function(req, res) {
 app.use('/user', require('./routes/user'));
 app.use('/account', require('./routes/account'));
 app.use('/payment', require('./routes/payment'));
+app.use('/admin', require('./routes/admin'));
 
 // Catch-all Route
 app.all('*', function(req, res) {

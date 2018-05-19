@@ -47,6 +47,9 @@ router.post('/send', middleware.isAuthenticated(true), function (req, res) {
                         return;
                     } else {
                         if (target) {
+                            if(target.freezed){
+                                req.flash('messages', { type: '', message: 'The account you trying to send is freezed (under investigation) !'})
+                            }else{
                             req.session.user.balances[currency] -= amount;
                             User.findByIdAndUpdate(req.session.user._id, { $set: { balances: req.session.user.balances } }, function (err, user) {
                                 if (err) {
@@ -83,6 +86,7 @@ router.post('/send', middleware.isAuthenticated(true), function (req, res) {
                                     });
                                 }
                             });
+                        }
                         } else {
                             req.flash('messages', { type: '', message: 'Couldn\'t found any user with the given e-mail!' });
                             res.redirect('/payment/send');
