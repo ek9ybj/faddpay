@@ -91,6 +91,7 @@ app.get('/', function(req, res) {
     if(req.session.user) {
         res.redirect('/user');
     } else {
+        res.locals.messages = req.flash('messages');
         res.render('guest');
     }
 });

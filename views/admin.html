@@ -15,7 +15,16 @@ layout: layout.html
         <tbody>
             [[ for(c in locals.userList) {]]
                 <tr><form action="/admin/user" method="post">
-                    <input type="hidden" name="userDetails" value="[[= locals.userList[c] ]]" />
+                    <input type="hidden" name="id" value="[[= locals.userList[c]._id ]]" />
                     <td>[[= locals.userList[c].name ]]</td>
+                    <td>[[= locals.userList[c].email ]]</td>
+                    <td>[[= locals.userList[c].lastActivitz ]]</td>
+                    <td><button type="submit">Detail</button></form>
+                    <form action="/admin" method="post">
+                    <input type="hidden" name="id" value="[[= locals.userList[c]._id ]]" />
+                    <input type="hidden" name="freezed" value="[[= locals.userList[c].freezed ]]" />
+                    <button type="submit">[[? locals.userList[c].freezed ]]Unfreez[[??]]Freez[[?]]</button></td></form>
             [[}]]
+        </tbody>
+    </table>
 #]]
