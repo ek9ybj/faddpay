@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ek9ybj/faddpay#readme",
   "dependencies": {
+    "@angular/cli": "^6.0.3",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "connect-flash": "^0.1.1",
