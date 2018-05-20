@@ -47,10 +47,13 @@ describe('Registration test', function () {
             done();
         });
     });
-    removeTestUsers(); //call this in the very last test only
 });
 
 //add more tests here, then move the removeTestUsers() call to the very last
+
+describe('Remove test users', function () {
+    removeTestUsers();
+})
 
 // Remove test users after all tests are done
 async function removeTestUsers() {
