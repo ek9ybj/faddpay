@@ -22,6 +22,8 @@ A fejlesztés közben folyamatos tesztelés történik.
 
 Jenkins: http://195.201.139.237:8080
 
+Auto Deploy: https://fadd.project-lr.com
+
 Végpontok
 ------
 - /user/register : regisztráció
