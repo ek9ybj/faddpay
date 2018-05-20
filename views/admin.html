@@ -23,7 +23,7 @@ layout: layout.html
                     <form action="/admin" method="post">
                     <input type="hidden" name="id" value="[[= locals.userList[c]._id ]]" />
                     <input type="hidden" name="freezed" value="[[= locals.userList[c].freezed ]]" />
-                    <button type="submit">[[? locals.userList[c].freezed ]]Unfreez[[??]]Freez[[?]]</button></td></form>
+                    <button type="submit">[[? locals.userList[c].freezed ]]Unfreeze[[??]]Freeze[[?]]</button></td></form>
             [[}]]
         </tbody>
     </table>
