@@ -69,7 +69,7 @@ describe('Logout test', function () {
     });
 });
 
-//add more tests here, then move the removeTestUsers() call to the very last
+//add more tests here
 
 describe('Remove test users', function () {
     removeTestUsers();
