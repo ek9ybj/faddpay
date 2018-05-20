@@ -76,7 +76,7 @@ router.post('/register', middleware.isAuthenticated(false), function (req, res) 
                         console.log(err);
                         return;
                     } else {
-                        req.flash('messages', { type: '', message: 'You are now registered and can log in.' });
+                        req.flash('messages', { type: '', message: 'Successful registration!' });
                         res.redirect('/user/login');
                     }
                 });
