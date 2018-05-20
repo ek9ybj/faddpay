@@ -34,6 +34,18 @@ Végpontok
 - /payment/request/id : adott fizetési kötelezettség
 - /admin : felhasználók kezelése
 
+Telepítés
+------
+1. [Node.js](https://nodejs.org/en/) letöltése és telepítése
+2. [MongoDB Community Server](https://www.mongodb.com/download-center) letöltése és telepítése
+    1. C:\data\db mappaszerkezet létrehozása
+    2. 'mongod' parancs futtatása admin parancssorban
+3. Repo letöltése egy tetszőleges mappába
+4. 'npm install' parancs kiadása az előbbi mappában
+5. Alkalmazás indítása a 'node app' parancs kiadásával
+    - Leállítás Ctrl+C
+- Unit testek futtatása 'mocha' parancs kiadásával
+
 Csapattagok
 ------
 Anga Dániel  
