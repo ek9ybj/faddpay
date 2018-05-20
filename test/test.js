@@ -49,6 +49,26 @@ describe('Registration test', function () {
     });
 });
 
+describe('Login test', function () {
+    it('should login testuser1', function (done) {
+        server.post('/user/login').type('form').send({email: 'testuser2@asd.com', password: 'testing'}).redirects(2).end(function (err, res) {
+            res.text.should.containEql('Welcome back');
+            res.status.should.equal(200);
+            done();
+        });
+    });
+});
+
+describe('Logout test', function () {
+    it('should logout testuser1', function (done) {
+        server.get('/user/logout').redirects(1).end(function (err, res) {
+            res.text.should.containEql('You\'ve logged out!');
+            res.status.should.equal(200);
+            done();
+        });
+    });
+});
+
 //add more tests here, then move the removeTestUsers() call to the very last
 
 describe('Remove test users', function () {
